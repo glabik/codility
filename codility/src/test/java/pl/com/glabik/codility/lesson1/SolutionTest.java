@@ -45,7 +45,7 @@ public class SolutionTest extends TestCase
         
         assertEquals(1, solution.solution(-33));
         
-//        System.out.println(Integer.toBinaryString(2_147_483_648));
+//      System.out.println(Integer.toBinaryString(2_147_483_648));
     }
     
 }
