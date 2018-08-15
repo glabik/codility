@@ -42,8 +42,25 @@ public class CyclicRotation {
 	
 	public int[] solution(int[] A, int K) {
 		
+		int realK = K % A.length;
 		
-		return new int[0];
+		if(realK == 0) {
+			return A;
+		}
+		
+		int[] result = new int[A.length];
+		int newPos=0;
+
+		for(int i=0; i<A.length; i++) {
+			newPos = i+realK;
+			if(newPos>=A.length) {
+				newPos = newPos - A.length;
+			}
+			result[newPos] = A[i];
+		}
+		
+		return result;
 	}
+	
 	
 }

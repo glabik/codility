@@ -33,9 +33,23 @@ public class CyclicRotationTest extends TestCase
     public void testForValues(){
     	CyclicRotation cr = new CyclicRotation();
     	
-    	int[] input = new int[] {3, 8, 9, 7, 6};
-    	int[] output = new int[] {9, 7, 6, 3, 8};
-    	int[] result = cr.solution(input, 3);
+    	int[] input;
+    	int[] output;
+    	int[] result;
+    	
+    	input = new int[] {1, 2, 3, 4};
+    	output = new int[] {1, 2, 3, 4};
+    	result = cr.solution(input, 4);
+        assertTrue(Arrays.equals(output, result));
+        
+    	input = new int[] {3, 8, 9, 7, 6};
+    	output = new int[] {9, 7, 6, 3, 8};
+    	result = cr.solution(input, 3);
+    	assertTrue(Arrays.equals(output, result));
+        
+        input = new int[] {0, 0, 0};
+    	output = new int[] {0, 0, 0};
+    	result = cr.solution(input, 1);
         assertTrue(Arrays.equals(output, result));
         
         
