@@ -42,6 +42,10 @@ public class CyclicRotation {
 	
 	public int[] solution(int[] A, int K) {
 		
+		if(A.length == 0){
+			return A;
+		}
+		
 		int realK = K % A.length;
 		
 		if(realK == 0) {

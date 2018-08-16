@@ -52,6 +52,10 @@ public class CyclicRotationTest extends TestCase
     	result = cr.solution(input, 1);
         assertTrue(Arrays.equals(output, result));
         
+        input = new int[0];
+    	output = new int[0];
+    	result = cr.solution(input, 5);
+        assertTrue(Arrays.equals(output, result));
         
 //      System.out.println(Integer.toBinaryString(2_147_483_648));
     }
