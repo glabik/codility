@@ -1,5 +1,6 @@
 package pl.com.glabik.codility.challenges;
 
+import java.math.BigInteger;
 import java.util.Arrays;
 
 /*
@@ -51,54 +52,70 @@ public class Clock {
 
 	public int solution(int[][] A, int P) {
 		
-		String[] occurences = new String[A.length];
+		BigInteger[] occurences = new BigInteger[A.length];
 		
 		for(int i=0; i<A.length; i++) {
 			
-//			String pointInfo = Arrays.toString(A[i]);
-//			System.out.println(" start rotate for "+pointInfo);
+			String pointInfo = Arrays.toString(A[i]);
+			System.out.println(i+" start rotate for "+pointInfo);
 			
-			String[] rotates = new String[A[i].length];
+			BigInteger[] rotates = new BigInteger[A[i].length];
 			for(int j=0; j<A[i].length; j++) {
 				
 				int firstPoint = A[i][j];
 				int rotatesCount = P - firstPoint +1;
 				int[] basePointArray = rotateBy(A[i], rotatesCount, P);
-				String basePoint = toStringValue(basePointArray);
+				BigInteger basePoint = toBigIntValue(basePointArray);
 				
-//				System.out.println(" ------start rotate for "+pointInfo+"    base point is "+basePoint+" [rotatesCount="+rotatesCount+"]");
-			
+				System.out.println(" ------start rotate for "+pointInfo+"    base point is "+basePoint+" [rotatesCount="+rotatesCount+"]");
+				
 				rotates[j] = basePoint;
 			}
 			
 			Arrays.sort(rotates);
-			String basePoint = rotates[0];
+			BigInteger basePoint = rotates[0];
 			occurences[i] = basePoint;
+			
+			System.out.println(" ---------------------------------------------------------- basePoint="+basePoint);
 			
 		}
 		
 
 		Arrays.sort(occurences);
-//		System.out.println(" occurences " + Arrays.toString(occurences));
+		System.out.println(" occurences " + Arrays.toString(occurences));
 		boolean isPairedAlready = false;
 		int pairs = 0;
-		String prevVal=occurences[0];
+		int identCount = 0;
+		BigInteger prevVal=occurences[0];
 		for(int i=1; i<occurences.length; i++) {
 			
 			if(occurences[i].equals(prevVal) && !isPairedAlready) {
-				pairs+=2;
+				identCount=2;
 				isPairedAlready = true;
 			}else if(occurences[i].equals(prevVal) && isPairedAlready){
-			    pairs+=1;
+				identCount+=1;
 			}else if(!occurences[i].equals(prevVal)){
-				prevVal = occurences[i];
-				isPairedAlready = true;
+				isPairedAlready = false;
+				System.out.println("identCount "+identCount);
+				pairs =+ silnia(identCount)/(silnia(2)*silnia(identCount-2));
 			}
-						
+			prevVal = occurences[i];	
 			
+		}
+		if(isPairedAlready) {
+			pairs +=pairs = silnia(identCount)/(silnia(2)*silnia(identCount-2));
 		}
 		
 		return pairs;
+	}
+	
+	
+	private static int silnia(int i)
+	{
+	if (i < 1)
+	return 1;
+	else
+	return i * silnia(i - 1);
 	}
 	
 	
@@ -126,13 +143,21 @@ public class Clock {
 		return result;
 	}
 	
-	protected String toStringValue(int[] pointArray) {
+//	protected String toStringValue(int[] pointArray) {
+//		Arrays.sort(pointArray);
+//		StringBuffer pointSB = new StringBuffer(); 
+//		for(int i=0; i<pointArray.length; i++) {
+//			pointSB.append(pointArray[i]);
+//		}
+//		return pointSB.toString();
+//	}
+	
+	protected BigInteger toBigIntValue(int[] pointArray) {
 		Arrays.sort(pointArray);
 		StringBuffer pointSB = new StringBuffer(); 
 		for(int i=0; i<pointArray.length; i++) {
 			pointSB.append(pointArray[i]);
 		}
-		return pointSB.toString();
+		return new BigInteger(pointSB.toString());
 	}
-	
 }
