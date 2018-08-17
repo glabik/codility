@@ -56,8 +56,8 @@ public class Clock {
 		
 		for(int i=0; i<A.length; i++) {
 			
-			String pointInfo = Arrays.toString(A[i]);
-			System.out.println(i+" start rotate for "+pointInfo);
+//			String pointInfo = Arrays.toString(A[i]);
+//			System.out.println(i+" start rotate for "+pointInfo);
 			
 			BigInteger[] rotates = new BigInteger[A[i].length];
 			for(int j=0; j<A[i].length; j++) {
@@ -67,7 +67,7 @@ public class Clock {
 				int[] basePointArray = rotateBy(A[i], rotatesCount, P);
 				BigInteger basePoint = toBigIntValue(basePointArray);
 				
-				System.out.println(" ------start rotate for "+pointInfo+"    base point is "+basePoint+" [rotatesCount="+rotatesCount+"]");
+//				System.out.println(" ------start rotate for "+pointInfo+"    base point is "+basePoint+" [rotatesCount="+rotatesCount+"]");
 				
 				rotates[j] = basePoint;
 			}
@@ -76,13 +76,13 @@ public class Clock {
 			BigInteger basePoint = rotates[0];
 			occurences[i] = basePoint;
 			
-			System.out.println(" ---------------------------------------------------------- basePoint="+basePoint);
+//			System.out.println(" ---------------------------------------------------------- basePoint="+basePoint);
 			
 		}
 		
 
 		Arrays.sort(occurences);
-		System.out.println(" occurences " + Arrays.toString(occurences));
+//		System.out.println(" occurences " + Arrays.toString(occurences));
 		boolean isPairedAlready = false;
 		int pairs = 0;
 		int identCount = 0;
@@ -96,7 +96,7 @@ public class Clock {
 				identCount+=1;
 			}else if(!occurences[i].equals(prevVal)){
 				isPairedAlready = false;
-				System.out.println("identCount "+identCount);
+//				System.out.println("identCount "+identCount);
 				pairs =+ silnia(identCount)/(silnia(2)*silnia(identCount-2));
 			}
 			prevVal = occurences[i];	
