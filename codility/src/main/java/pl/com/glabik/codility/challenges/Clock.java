@@ -55,34 +55,48 @@ public class Clock {
 		
 		for(int i=0; i<A.length; i++) {
 			
-			String pointInfo = Arrays.toString(A[i]);
+//			String pointInfo = Arrays.toString(A[i]);
 //			System.out.println(" start rotate for "+pointInfo);
 			
-			Arrays.sort(A[i]);
 			
-			String basePoint;
-			int firstPoint = A[i][0];
-			if(firstPoint==1) {
-				basePoint = toStringValue(A[i]);
-			}else {
 			
+			String[] rotates = new String[A[i].length];
+			for(int j=0; j<A[i].length; j++) {
+				
+				int firstPoint = A[i][j];
 				int rotatesCount = P - firstPoint +1;
-				
 				int[] basePointArray = rotateBy(A[i], rotatesCount, P);
+				String basePoint = toStringValue(basePointArray);
 				
-				basePoint = toStringValue(basePointArray);
-				
-				System.out.println("     rotatesCount="+rotatesCount);
+//				System.out.println(" ------start rotate for "+pointInfo+"    base point is "+basePoint+" [rotatesCount="+rotatesCount+"]");
+			
+				rotates[j] = basePoint;
 			}
 			
-			System.out.println(" start rotate for "+pointInfo+"    base point is "+basePoint);
+			Arrays.sort(rotates);
+			String basePoint = rotates[0];
+//			
+//			System.out.println(" ------start rotate for "+pointInfo+"    base point is "+basePoint+" [rotatesCount="+rotatesCount+"]");
+//			
+//			
+////			Arrays.sort(A[i]);
+//			
+//			int firstPoint = A[i][0];
+//
+//			int rotatesCount = P - firstPoint +1;
+//			
+//			int[] basePointArray = rotateBy(A[i], rotatesCount, P);
+//			
+//			String basePoint = toStringValue(basePointArray);
+//		
+////			System.out.println(" start rotate for "+pointInfo+"    base point is "+basePoint+" [rotatesCount="+rotatesCount+"]");
 			occurences[i] = basePoint;
 			
 		}
 		
 
 		Arrays.sort(occurences);
-		System.out.println(" occurences " + Arrays.toString(occurences));
+//		System.out.println(" occurences " + Arrays.toString(occurences));
 		boolean isPairedAlready = false;
 		int pairs = 0;
 		String prevVal=occurences[0];
