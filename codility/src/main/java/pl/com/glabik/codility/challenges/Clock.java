@@ -49,41 +49,93 @@ Copyright 2009–2018 by Codility Limited. All Rights Reserved. Unauthorized cop
  */
 public class Clock {
 
-	
 	public int solution(int[][] A, int P) {
 		
-		int[][] angles = new int[0][0];
+		String[] occurences = new String[A.length];
 		
-		int angle=0;
 		for(int i=0; i<A.length; i++) {
 			
-			angles = new int[A.length][A[i].length-1];
+			String pointInfo = Arrays.toString(A[i]);
+//			System.out.println(" start rotate for "+pointInfo);
 			
-			for(int j=0; j<A[i].length-1; j++) {
+			Arrays.sort(A[i]);
+			
+			String basePoint;
+			int firstPoint = A[i][0];
+			if(firstPoint==1) {
+				basePoint = toStringValue(A[i]);
+			}else {
+			
+				int rotatesCount = P - firstPoint +1;
 				
-				angle = calculateAngle(A[i][j], A[i][j+1], P);
+				int[] basePointArray = rotateBy(A[i], rotatesCount, P);
 				
-				angles[i][j] = angle;
+				basePoint = toStringValue(basePointArray);
 				
+				System.out.println("     rotatesCount="+rotatesCount);
 			}
+			
+			System.out.println(" start rotate for "+pointInfo+"    base point is "+basePoint);
+			occurences[i] = basePoint;
+			
 		}
 		
-		for(int i=0; i<angles.length; i++) {
-			for(int j=0; j<angles[i].length; j++) {
-				System.out.println(String.format("[%d][%d] = %d", i, j, angles[i][j]));
+
+		Arrays.sort(occurences);
+		System.out.println(" occurences " + Arrays.toString(occurences));
+		boolean isPairedAlready = false;
+		int pairs = 0;
+		String prevVal=occurences[0];
+		for(int i=1; i<occurences.length; i++) {
+			
+			if(occurences[i].equals(prevVal) && !isPairedAlready) {
+				pairs+=2;
+				isPairedAlready = true;
+			}else if(occurences[i].equals(prevVal) && isPairedAlready){
+			    pairs+=1;
+			}else if(!occurences[i].equals(prevVal)){
+				prevVal = occurences[i];
+				isPairedAlready = true;
 			}
+						
+			
 		}
 		
-		
-		return 0;
+		return pairs;
 	}
 	
-	protected int calculateAngle(int posA, int posB, int scale) {
-		int angle = Math.abs(posA - posB) * 360 / scale ;
-		if(angle > 180) {
-			angle = 360 - angle;
+	
+	protected int[][] generateAllRotates(int[] pointArray, int P) {
+		int[][] result = new int[P][];
+		for(int i=0; i<P; i++) {
+			result[i] = rotateBy(pointArray, i, P);
 		}
-		return angle;
+		return result;
+		
+	}
+	
+	protected int[] rotateBy(int[] pointArray, int rotateBy, int P) {
+//		System.out.println(" rotating point "+Arrays.toString(pointArray));
+		int[] result = new int[pointArray.length];
+		int val=0;
+		for(int i=0; i<pointArray.length; i++) {
+			val = pointArray[i] + rotateBy;
+			if(val > P) {
+				val = val - P;
+			}
+			result[i] = val;
+//			System.out.println(" ---- "+i + "="+Arrays.toString(result));
+		}
+		return result;
+	}
+	
+	protected String toStringValue(int[] pointArray) {
+		Arrays.sort(pointArray);
+		StringBuffer pointSB = new StringBuffer(); 
+		for(int i=0; i<pointArray.length; i++) {
+			pointSB.append(pointArray[i]);
+		}
+		return pointSB.toString();
 	}
 	
 }
