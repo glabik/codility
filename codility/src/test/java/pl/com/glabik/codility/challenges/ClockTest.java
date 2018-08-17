@@ -35,6 +35,14 @@ public class ClockTest extends TestCase
     	int P;
     	int[][] A;
     	
+    	P = 8;
+        A = new int[4][3];
+    	A[0][0] = 7;     A[0][1] = 1;     A[0][2] = 2;
+    	A[1][0] = 2;     A[1][1] = 4;     A[1][2] = 5;
+    	A[2][0] = 1;     A[2][1] = 7;     A[2][2] = 2;
+    	A[3][0] = 7;     A[3][1] = 7;     A[3][2] = 2;
+    	assertEquals(3, c.solution(A, P));
+    	
     	P = 4;
     	A = new int[5][2];
     	A[0][0] = 1;     A[0][1] = 2;
