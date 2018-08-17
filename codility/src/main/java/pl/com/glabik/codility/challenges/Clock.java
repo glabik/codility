@@ -58,8 +58,6 @@ public class Clock {
 //			String pointInfo = Arrays.toString(A[i]);
 //			System.out.println(" start rotate for "+pointInfo);
 			
-			
-			
 			String[] rotates = new String[A[i].length];
 			for(int j=0; j<A[i].length; j++) {
 				
@@ -75,21 +73,6 @@ public class Clock {
 			
 			Arrays.sort(rotates);
 			String basePoint = rotates[0];
-//			
-//			System.out.println(" ------start rotate for "+pointInfo+"    base point is "+basePoint+" [rotatesCount="+rotatesCount+"]");
-//			
-//			
-////			Arrays.sort(A[i]);
-//			
-//			int firstPoint = A[i][0];
-//
-//			int rotatesCount = P - firstPoint +1;
-//			
-//			int[] basePointArray = rotateBy(A[i], rotatesCount, P);
-//			
-//			String basePoint = toStringValue(basePointArray);
-//		
-////			System.out.println(" start rotate for "+pointInfo+"    base point is "+basePoint+" [rotatesCount="+rotatesCount+"]");
 			occurences[i] = basePoint;
 			
 		}
