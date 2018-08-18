@@ -85,8 +85,9 @@ public class Clock {
 			
 //			System.out.println("---"+Arrays.toString(point));
 			
-			int[][] rotations = new int[A[i].length][point.length];
+//			int[][] rotations = new int[A[i].length][point.length];
 			
+			String basePointStr=null;
 			boolean shouldAddNew = true;
 			second: 
 			for(int j=0; j<point.length; j++) {
@@ -95,18 +96,20 @@ public class Clock {
 				int[] basePointArray = rotateBy(A[i], rotatesCount, P);
 				Arrays.sort(basePointArray);
 				
-				if(map.containsKey(toStringValue(basePointArray))) {
-					map.put(toStringValue(basePointArray), map.get(toStringValue(basePointArray))+1);
+				basePointStr = toStringValue(basePointArray);
+				
+				if(map.containsKey(basePointStr)) {
+					map.put(basePointStr, map.get(basePointStr)+1);
 					shouldAddNew = false;
 					break second;
 				}
 				
-				rotations[0] = basePointArray;
+//				rotations[0] = basePointArray;
 //				System.out.println("-------"+Arrays.toString(basePointArray));
 			}
 			
 			if(shouldAddNew) {
-				map.put(toStringValue(rotations[0]), 1);
+				map.put(basePointStr, 1);
 			}
 			
 //			System.out.println("-------"+Arrays.toString(rotations));
@@ -129,7 +132,7 @@ public class Clock {
 			if(entry.getValue()<2) {
 				continue;
 			}
-			pairs +=pairs = silnia(entry.getValue())/(silnia(2)*silnia(entry.getValue()-2));
+			pairs +=  silnia(entry.getValue())/(silnia(2)*silnia(entry.getValue()-2));
 		}
 		
 		
@@ -202,7 +205,7 @@ public class Clock {
 		Arrays.sort(pointArray);
 		StringBuffer pointSB = new StringBuffer(); 
 		for(int i=0; i<pointArray.length; i++) {
-			pointSB.append("_");
+			pointSB.append(".");
 			pointSB.append(pointArray[i]);
 		}
 		return pointSB.toString();
