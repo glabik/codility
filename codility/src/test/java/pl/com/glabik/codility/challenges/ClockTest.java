@@ -87,7 +87,7 @@ public class ClockTest extends TestCase
 
         assertEquals(3, c.solution(A, P));
         
-        P = 23;
+        P = 20;
         A = new int[3][5];
     	A[0][0] = 1;     A[0][1] = 1;     A[0][2] = 1;     A[0][3] = 1;     A[0][4] = 1;
     	A[1][0] = 2;     A[1][1] = 2;     A[1][2] = 2;     A[1][3] = 2;     A[1][4] = 2;
