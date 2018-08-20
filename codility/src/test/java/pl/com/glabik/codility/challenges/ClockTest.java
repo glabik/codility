@@ -3,7 +3,6 @@ package pl.com.glabik.codility.challenges;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import pl.com.glabik.codility.AppTest;
 
 
 public class ClockTest extends TestCase

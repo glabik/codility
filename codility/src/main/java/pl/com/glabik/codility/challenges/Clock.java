@@ -56,124 +56,67 @@ public class Clock {
 	
 	public int solution(int[][] A, int P) {
 		
-		Map<String, Integer> map = new HashMap<>();
-		
-		BigInteger[] occurences = new BigInteger[A.length];
+		Map<String, Long> map = new HashMap<>();
 		
 		for(int i=0; i<A.length; i++) {
-			
-//			String pointInfo = Arrays.toString(A[i]);
-//			System.out.println(i+" start rotate for "+pointInfo);
-			
-			BigInteger[] rotates = new BigInteger[A[i].length];
-			
-			int[] point = new int[A[i].length];
-			for(int j=0; j<A[i].length; j++) {
-				
-				point[j] = A[i][j];
-				
-				
-//				int firstPoint = A[i][j];
-//				int rotatesCount = P - firstPoint +1;
-//				int[] basePointArray = rotateBy(A[i], rotatesCount, P);
-//				BigInteger basePoint = toBigIntValue(basePointArray);
-//				
-////				System.out.println(" ------start rotate for "+pointInfo+"    base point is "+basePoint+" [rotatesCount="+rotatesCount+"]");
-//				
-//				rotates[j] = basePoint;
-			}
-			
-//			System.out.println("---"+Arrays.toString(point));
-			
-//			int[][] rotations = new int[A[i].length][point.length];
+//			System.out.println("---"+Arrays.toString(A[i]));
 			
 			String basePointStr=null;
 			boolean shouldAddNew = true;
 			second: 
-			for(int j=0; j<point.length; j++) {
-				int firstPoint = A[i][j];
-				int rotatesCount = P - firstPoint +1;
+			for(int j=0; j<A[i].length; j++) {
+				int point = A[i][j];
+				
+				
+				int rotatesCount = P - point + 1;
 				int[] basePointArray = rotateBy(A[i], rotatesCount, P);
 				Arrays.sort(basePointArray);
-				
 				basePointStr = toStringValue(basePointArray);
-				
+
 				if(map.containsKey(basePointStr)) {
 					map.put(basePointStr, map.get(basePointStr)+1);
 					shouldAddNew = false;
+//					System.out.println(String.format("-------%s -- basePointStr %s -- wynik szukania: %s -- shouldAddNew: %s", point, basePointStr, map.get(basePointStr), shouldAddNew));
 					break second;
 				}
-				
-//				rotations[0] = basePointArray;
-//				System.out.println("-------"+Arrays.toString(basePointArray));
+//				System.out.println(String.format("-------%s -- basePointStr %s -- wynik szukania: %s -- shouldAddNew: %s", point, basePointStr, map.get(basePointStr), shouldAddNew));
 			}
 			
 			if(shouldAddNew) {
-				map.put(basePointStr, 1);
+				map.put(basePointStr, 1l);
+//				System.out.println(String.format("--dodano: %s", basePointStr));
 			}
 			
 //			System.out.println("-------"+Arrays.toString(rotations));
-			
 //			for (Map.Entry<String, Integer> entry : map.entrySet()){
 //			    System.out.println(entry.getKey() + "/" + entry.getValue());
 //			}
-			
-//			Arrays.sort(rotates);
-//			BigInteger basePoint = rotates[0];
-//			occurences[i] = basePoint;
-			
+
 //			System.out.println(" ---------------------------------------------------------- basePoint="+basePoint);
 			
 		}
 		
-		
 		int pairs=0;
-		for (Map.Entry<String, Integer> entry : map.entrySet()){
+		for (Map.Entry<String, Long> entry : map.entrySet()){
 			if(entry.getValue()<2) {
 				continue;
 			}
 			pairs +=  silnia(entry.getValue())/(silnia(2)*silnia(entry.getValue()-2));
 		}
 		
-		
 //		System.out.println("pairs "+pairs);
 		
-
-//		Arrays.sort(occurences);
-////		System.out.println(" occurences " + Arrays.toString(occurences));
-//		boolean isPairedAlready = false;
-//		int pairs = 0;
-//		int identCount = 0;
-//		BigInteger prevVal=occurences[0];
-//		for(int i=1; i<occurences.length; i++) {
-//			
-//			if(occurences[i].equals(prevVal) && !isPairedAlready) {
-//				identCount=2;
-//				isPairedAlready = true;
-//			}else if(occurences[i].equals(prevVal) && isPairedAlready){
-//				identCount+=1;
-//			}else if(!occurences[i].equals(prevVal)){
-//				isPairedAlready = false;
-////				System.out.println("identCount "+identCount);
-//				pairs =+ silnia(identCount)/(silnia(2)*silnia(identCount-2));
-//			}
-//			prevVal = occurences[i];	
-//			
-//		}
-//		if(isPairedAlready) {
-//			pairs +=pairs = silnia(identCount)/(silnia(2)*silnia(identCount-2));
-//		}
-//		
 		return pairs;
 	}
 	
+
 	
-	private static int silnia(int i)
-	{
-	if (i < 1)
-	return 1;
-	else
-	return i * silnia(i - 1);
+	
+	private static long silnia(long i){
+		if (i < 1)
+			return 1;
+		else
+			return i * silnia(i - 1l);
 	}
 	
 	
@@ -183,10 +126,11 @@ public class Clock {
 			result[i] = rotateBy(pointArray, i, P);
 		}
 		return result;
-		
 	}
 	
 	protected int[] rotateBy(int[] pointArray, int rotateBy, int P) {
+		if(rotateBy==P)
+			return Arrays.copyOf(pointArray, pointArray.length);
 //		System.out.println(" rotating point "+Arrays.toString(pointArray));
 		int[] result = new int[pointArray.length];
 		int val=0;
