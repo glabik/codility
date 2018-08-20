@@ -56,11 +56,15 @@ public class Clock {
 	
 	public int solution(int[][] A, int P) {
 		
-		Map<String, Long> map = new HashMap<>();
+		Map<String, Integer> representationsMap = new HashMap<>();
+		Map<Integer, Long> occurencesMap = new HashMap<>();
 		
 		for(int i=0; i<A.length; i++) {
 //			System.out.println("---"+Arrays.toString(A[i]));
 			
+			Arrays.sort(A[i]);
+			
+			occurencesMap.put(i, 0l);
 			String basePointStr=null;
 			boolean shouldAddNew = true;
 			second: 
@@ -73,17 +77,21 @@ public class Clock {
 				Arrays.sort(basePointArray);
 				basePointStr = toStringValue(basePointArray);
 
-				if(map.containsKey(basePointStr)) {
-					map.put(basePointStr, map.get(basePointStr)+1);
+				if(representationsMap.containsKey(basePointStr)) {
+					Integer idx = representationsMap.get(basePointStr);
+					occurencesMap.put(idx, occurencesMap.get(idx)+1);
 					shouldAddNew = false;
 //					System.out.println(String.format("-------%s -- basePointStr %s -- wynik szukania: %s -- shouldAddNew: %s", point, basePointStr, map.get(basePointStr), shouldAddNew));
 					break second;
+				}else {
+					representationsMap.put(basePointStr, i);
 				}
 //				System.out.println(String.format("-------%s -- basePointStr %s -- wynik szukania: %s -- shouldAddNew: %s", point, basePointStr, map.get(basePointStr), shouldAddNew));
 			}
 			
 			if(shouldAddNew) {
-				map.put(basePointStr, 1l);
+				Integer idx = representationsMap.get(basePointStr);
+				occurencesMap.put(idx, 1l);
 //				System.out.println(String.format("--dodano: %s", basePointStr));
 			}
 			
@@ -97,7 +105,7 @@ public class Clock {
 		}
 		
 		int pairs=0;
-		for (Map.Entry<String, Long> entry : map.entrySet()){
+		for (Map.Entry<Integer, Long> entry : occurencesMap.entrySet()){
 			if(entry.getValue()<2) {
 				continue;
 			}
