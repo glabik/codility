@@ -71,7 +71,6 @@ public class Clock {
 			for(int j=0; j<A[i].length; j++) {
 				int point = A[i][j];
 				
-				
 				int rotatesCount = P - point + 1;
 				int[] basePointArray = rotateBy(A[i], rotatesCount, P);
 				Arrays.sort(basePointArray);
@@ -86,12 +85,13 @@ public class Clock {
 				}else {
 					representationsMap.put(basePointStr, i);
 				}
+				
 //				System.out.println(String.format("-------%s -- basePointStr %s -- wynik szukania: %s -- shouldAddNew: %s", point, basePointStr, map.get(basePointStr), shouldAddNew));
 			}
 			
 			if(shouldAddNew) {
-				Integer idx = representationsMap.get(basePointStr);
-				occurencesMap.put(idx, 1l);
+//				Integer idx = representationsMap.get(basePointStr);
+				occurencesMap.put(i, 1l);
 //				System.out.println(String.format("--dodano: %s", basePointStr));
 			}
 			
@@ -104,12 +104,12 @@ public class Clock {
 			
 		}
 		
-		int pairs=0;
+		int pairs = 0;
 		for (Map.Entry<Integer, Long> entry : occurencesMap.entrySet()){
 			if(entry.getValue()<2) {
 				continue;
 			}
-			pairs +=  silnia(entry.getValue())/(silnia(2)*silnia(entry.getValue()-2));
+			pairs +=  silnia(entry.getValue()).divide(silnia(2).multiply(silnia(entry.getValue()-2))).intValue();
 		}
 		
 //		System.out.println("pairs "+pairs);
@@ -120,11 +120,11 @@ public class Clock {
 
 	
 	
-	private static long silnia(long i){
+	private static BigInteger silnia(long i){
 		if (i < 1)
-			return 1;
+			return BigInteger.ONE;
 		else
-			return i * silnia(i - 1l);
+			return BigInteger.valueOf(i).multiply(silnia(i - 1));
 	}
 	
 	
