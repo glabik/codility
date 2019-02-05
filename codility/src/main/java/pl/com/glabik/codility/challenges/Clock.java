@@ -58,17 +58,80 @@ public class Clock {
 		
 		Map<String, Integer> representationsMap = new HashMap<>();
 		Map<Integer, Long> occurencesMap = new HashMap<>();
+	
+        
+		
+//		System.out.println("--------------------------------------");;
+//		System.out.println("--------------------------------------");;
+//		System.out.println("--------------------------------------");;
 		
 		for(int i=0; i<A.length; i++) {
 //			System.out.println("---"+Arrays.toString(A[i]));
 			
 			Arrays.sort(A[i]);
 			
+//			System.out.println(String.format("point=%s", Arrays.toString(A[i])));;
+			
+//			String basePointStrTmp = toStringValue(A[i]);
+//			if(A[i][0]==1 && representationsMap.containsKey(basePointStrTmp)) {
+//				Integer idx = representationsMap.get(basePointStrTmp);
+//				occurencesMap.put(idx, occurencesMap.get(idx)+1);
+//			}else {
+//				
+//				int[] ROT = new int[A[i].length];
+//				for(int j=0; j<A[i].length; j++) {
+//					ROT[j] = P - A[i][j] + 1;
+//				}
+////				System.out.println(String.format("----ROT=%s", Arrays.toString(ROT)));;
+//				int[][] ROT_POINT = new int[A[i].length][A[i].length];
+//				for(int j=0; j<ROT.length; j++) {
+//					ROT_POINT[j]= Arrays.copyOf(A[i], A[i].length);					
+////					System.out.println(String.format("----ROT_POINT[%d]=%s",j, Arrays.toString(ROT_POINT[j])));;				
+//					for(int k=0; k<ROT.length; k++) {
+//						if(ROT[j] == P)
+//							continue;
+////						System.out.println(String.format("----ROT_POINT[%d][%d]=%d, move by %d", j,k,ROT_POINT[j][k], ROT[j] ));;
+//						ROT_POINT[j][k] = A[i][k] + ROT[j];
+//						if(ROT_POINT[j][k] > P) {
+//							ROT_POINT[j][k] = ROT_POINT[j][k] - P;
+//						}
+//					}
+////					System.out.println(String.format("--ROT_POINT[%d]=%s",j, Arrays.toString(ROT_POINT[j])));;
+//				}
+//				String info = "";
+//				for(int j=0; j<ROT_POINT.length; j++) {
+//					info += " "+Arrays.toString(ROT_POINT[j]);
+//				}
+////				System.out.println(String.format("----ROT_POINTS: %s", info));;				
+//				int[] basePointArray = ROT_POINT[0];
+//				Arrays.sort(basePointArray);
+//				String basePointStr = toStringValue(basePointArray);
+//				if(representationsMap.containsKey(basePointStr)) {
+//					Integer idx = representationsMap.get(basePointStr);
+//					occurencesMap.put(idx, occurencesMap.get(idx)+1);
+//				}else {				
+//					representationsMap.put(basePointStr, i);
+//					for(int j=1; j<ROT.length; j++) {
+//						basePointArray = ROT_POINT[j];
+//						Arrays.sort(basePointArray);
+//						basePointStr = toStringValue(basePointArray);
+//						representationsMap.put(basePointStr, i);
+//					}
+//					occurencesMap.put(i, 1l);
+//				}
+//			}
+			
+			
+			
+			
 			occurencesMap.put(i, 0l);
 			String basePointStr=null;
 			boolean shouldAddNew = true;
 			second: 
 			for(int j=0; j<A[i].length; j++) {
+				
+				long startTime = System.nanoTime();
+				
 				int point = A[i][j];
 				
 				int rotatesCount = P - point + 1;
@@ -76,15 +139,19 @@ public class Clock {
 				Arrays.sort(basePointArray);
 				basePointStr = toStringValue(basePointArray);
 
-				if(representationsMap.containsKey(basePointStr)) {
+				if(j==0 && representationsMap.containsKey(basePointStr)) {
 					Integer idx = representationsMap.get(basePointStr);
 					occurencesMap.put(idx, occurencesMap.get(idx)+1);
 					shouldAddNew = false;
 //					System.out.println(String.format("-------%s -- basePointStr %s -- wynik szukania: %s -- shouldAddNew: %s", point, basePointStr, map.get(basePointStr), shouldAddNew));
 					break second;
-				}else {
-					representationsMap.put(basePointStr, i);
 				}
+					
+				representationsMap.put(basePointStr, i);
+				
+				long endTime = System.nanoTime();
+		        long duration = (endTime - startTime);  //divide by 1000000 to get milliseconds.
+		        System.out.println(String.format("time_[%s][%s]: %s", i, j, duration));
 				
 //				System.out.println(String.format("-------%s -- basePointStr %s -- wynik szukania: %s -- shouldAddNew: %s", point, basePointStr, map.get(basePointStr), shouldAddNew));
 			}
@@ -95,6 +162,9 @@ public class Clock {
 //				System.out.println(String.format("--dodano: %s", basePointStr));
 			}
 			
+			
+			
+			
 //			System.out.println("-------"+Arrays.toString(rotations));
 //			for (Map.Entry<String, Integer> entry : map.entrySet()){
 //			    System.out.println(entry.getKey() + "/" + entry.getValue());
@@ -104,6 +174,7 @@ public class Clock {
 			
 		}
 		
+        
 		int pairs = 0;
 		for (Map.Entry<Integer, Long> entry : occurencesMap.entrySet()){
 			if(entry.getValue()<2) {
@@ -111,7 +182,7 @@ public class Clock {
 			}
 			pairs +=  silnia(entry.getValue()).divide(silnia(2).multiply(silnia(entry.getValue()-2))).intValue();
 		}
-		
+        
 //		System.out.println("pairs "+pairs);
 		
 		return pairs;

@@ -1,5 +1,7 @@
 package pl.com.glabik.codility.challenges;
 
+import java.util.Random;
+
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -98,6 +100,34 @@ public class ClockTest extends TestCase
 //    	A[7][0] = 1;     A[7][1] = 1;     A[7][2] = 4;     A[7][3] = 7;     A[7][4] = 7;
 
         assertEquals(3, c.solution(A, P));
+
+    }
+    
+    /**
+     * Rigourous Test :-)
+     */
+    public void largeValueTest(){
+    	
+    	Clock c = new Clock();
+    	int P;
+    	int[][] A;
+    	
+    	Random generator = new Random();
+    	P = 100_000_000;
+        A = new int[500][500];
+        for(int i=0; i<A.length; i++) {
+        	for(int j=0; j<A[i].length; j++) {
+            	
+        		A[i][j] = generator.nextInt(500);
+        		
+            }
+        }
+        long startTime = System.nanoTime();
+        int result = c.solution(A, P);
+        long endTime = System.nanoTime();
+        long duration = (endTime - startTime);  //divide by 1000000 to get milliseconds.
+        System.out.println("total time:"+duration);
+    	assertEquals(3, result);
     }
     
 //    public void testCalculateAngle(){
